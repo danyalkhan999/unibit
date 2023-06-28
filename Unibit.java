@@ -1,37 +1,36 @@
 package Basics;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Unibit {
     public static int[][] findTwoSumAndDouble(int[] nums, int target) {
         int[][] result = new int[2][];
 
         // Step 1: Find two integers with sum equal to the target value
-        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (map.containsKey(complement)) {
-                result[0] = new int[]{nums[i], complement};
-                break;
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    result[0] = new int[]{nums[i], nums[j]};
+                    break;
+                }
             }
-            map.put(nums[i], i);
         }
 
         // Step 2: Double the target value
         int doubleTarget = target * 2;
 
-        // Step 3: Find two integers with sum equal to the doubled target value
-        map.clear();
-        for (int i = 0; i < nums.length; i++) {
-            int complement = doubleTarget - nums[i];
-            if (map.containsKey(complement)) {
-                result[1] = new int[]{nums[i], complement};
-                break;
+        // Step 3: Find the combination of digits in the array that equals the doubled target value
+        List<Integer> combination = new ArrayList<>();
+        for (int num : nums) {
+            if (num == doubleTarget) {
+                combination.add(num);
             }
-            map.put(nums[i], i);
+        }
+
+        // Step 4: Convert the combination list to an array
+        result[1] = new int[combination.size()];
+        for (int i = 0; i < combination.size(); i++) {
+            result[1][i] = combination.get(i);
         }
 
         return result;
